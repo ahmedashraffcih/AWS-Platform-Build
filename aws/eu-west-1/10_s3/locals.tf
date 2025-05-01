@@ -1,5 +1,5 @@
 locals {
-  name_prefix = "${var.prefix}s3-${var.environment}-${var.region}"
+  name_prefix = "${var.prefix}-s3-${var.environment}-${var.region}-${var.name}"
 
   env = {
     account_id  = data.aws_caller_identity.current.account_id
@@ -11,19 +11,10 @@ locals {
     Region      = data.aws_region.current.name
     Environment = var.environment
     Owner       = "DATA_TEAM"
-    Project     = "DATALAKE"
-    Stage       = "DATALAKE-LZ"
+    Project     = "DATA_LAKE"
+    Stage       = "DATA_LAKE"
     ManagedBy   = var.ManagedBy
     CostCenter  = "DATALAKE"
   }
-  app_tags = {
-    Region      = data.aws_region.current.name
-    Environment = var.environment
-    Owner       = "APP_TEAM"
-    Project     = "APP"
-    Stage       = "RECEIPT_IMAGE_UPLOAD"
-    ManagedBy   = var.ManagedBy
-    CostCenter  = "datasquad_APP"
-  }
-
+  azs = slice(data.aws_availability_zones.available.names, 0, 3)
 }
